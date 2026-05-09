@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0f0e17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Suite & Match — Révisions Terminale</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>
+/* ===== RESET & VARIABLES ===== */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+  --bg: #0f0e17;
+  --card: #1a1a2e;
+  --card2: #16213e;
+  --border: #2a2a4a;
+  --purple: #7c3aed;
+  --purple-l: #a855f7;
+  --gold: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --cyan: #06b6d4;
+  --orange: #f97316;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --r: 14px;
+  --shadow: 0 4px 32px rgba(0,0,0,.5);
+}
+html { font-size: 16px; }
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+button { cursor: pointer; border: none; outline: none; font-family: inherit; }
+a { color: inherit; }
+
+/* ===== SCREENS ===== */
+.screen {
+  display: none;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: 16px;
+  max-width: 560px;
+  margin: 0 auto;
+  width: 100%;
+}
+.screen.active { display: flex; }
+
+/* ===== HOME ===== */
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-top: 8px;
+}
+.logo-wrap { display: flex; align-items: center; gap: 12px; }
+.logo-icon {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, var(--purple), var(--purple-l));
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 4px 16px rgba(124,58,237,.4);
+}
+.logo-text h1 { font-size: 1.4rem; font-weight: 800; }
+.logo-text p { font-size: 0.78rem; color: var(--muted); }
+.icon-btn {
+  background: var(--card2); border-radius: 50%;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; border: 1px solid var(--border);
+  transition: transform .15s;
+}
+.icon-btn:active { transform: scale(.9); }
+
+/* XP Bar */
+.xp-section { margin-bottom: 24px; }
+.xp-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.level-pill {
+  background: linear-gradient(135deg, var(--gold), #f97316);
+  color: #0f0e17; font-weight: 800; font-size: 0.78rem;
+  padding: 3px 10px; border-radius: 20px;
+  white-space: nowrap;
+}
+.xp-bar {
+  flex: 1; height: 8px; background: var(--card2);
+  border-radius: 4px; overflow: hidden;
+}
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--purple-l));
+  border-radius: 4px;
+  transition: width .6s ease;
+}
+.xp-label { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+
+/* Mini Stats */
+.mini-stats {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 10px;
+  margin-bottom: 28px;
+}
+.mini-stat {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 12px;
+  text-align: center;
+}
+.mini-stat strong { display: block; font-size: 1.3rem; font-weight: 800; }
+.mini-stat span { font-size: 0.72rem; color: var(--muted); }
+
+/* Section Title */
+.section-title {
+  font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--muted); margin-bottom: 12px;
+}
+
+/* Mode Grid */
+.mode-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-bottom: 28px;
+}
+.mode-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 18px 14px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  text-align: left; transition: transform .15s, border-color .15s, box-shadow .15s;
+  color: var(--text);
+}
+.mode-card:active { transform: scale(.96); }
+.mode-card:hover { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(124,58,237,.2); }
+.mode-icon { font-size: 1.8rem; }
+.mode-card strong { font-size: 1rem; font-weight: 700; }
+.mode-card span { font-size: 0.78rem; color: var(--muted); }
+.mode-card.sprint { border-color: rgba(245,158,11,.3); }
+.mode-card.sprint:hover { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(245,158,11,.2); }
+.mode-card.survival { border-color: rgba(239,68,68,.3); }
+.mode-card.survival:hover { border-color: var(--red); box-shadow: 0 0 0 2px rgba(239,68,68,.2); }
+.mode-card.daily { border-color: rgba(16,185,129,.3); }
+.mode-card.daily:hover { border-color: var(--green); box-shadow: 0 0 0 2px rgba(16,185,129,.2); }
+
+/* Badges preview */
+.badges-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.badge-chip {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 20px; padding: 4px 10px;
+  font-size: 0.78rem; display: flex; align-items: center; gap: 5px;
+}
+.badge-chip.earned { border-color: var(--gold); background: rgba(245,158,11,.1); }
+
+/* ===== CATEGORY SCREEN ===== */
+.screen-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 24px; padding-top: 8px;
+}
+.back-btn {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 8px 14px;
+  color: var(--text); font-size: 0.9rem;
+  transition: transform .15s;
+}
+.back-btn:active { transform: scale(.94); }
+.screen-header h2 { font-size: 1.2rem; font-weight: 800; }
+.cat-list { display: flex; flex-direction: column; gap: 10px; }
+.cat-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 16px 18px;
+  display: flex; align-items: center; gap: 14px;
+  text-align: left; color: var(--text);
+  transition: transform .15s, border-color .2s;
+}
+.cat-card:active { transform: scale(.98); }
+.cat-emoji { font-size: 1.6rem; width: 36px; text-align: center; }
+.cat-info { flex: 1; }
+.cat-info strong { display: block; font-weight: 700; }
+.cat-info span { font-size: 0.78rem; color: var(--muted); }
+.cat-arrow { color: var(--muted); font-size: 1.1rem; }
+.cat-card.all-topics { border-color: var(--purple); background: rgba(124,58,237,.08); }
+
+/* ===== GAME SCREEN ===== */
+.game-topbar {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px; padding-top: 4px;
+}
+.quit-btn {
+  background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.3);
+  color: var(--red); border-radius: 8px; padding: 6px 10px;
+  font-size: 0.9rem; transition: transform .15s;
+}
+.quit-btn:active { transform: scale(.9); }
+.game-mode-label {
+  flex: 1; font-size: 0.85rem; color: var(--muted); font-weight: 600;
+}
+.g-timer {
+  font-size: 1.1rem; font-weight: 800;
+  padding: 4px 12px; border-radius: 8px;
+  background: var(--card2); border: 1px solid var(--border);
+  min-width: 56px; text-align: center;
+  transition: color .3s;
+}
+.g-timer.danger { color: var(--red); border-color: var(--red); animation: pulse-red 1s infinite; }
+@keyframes pulse-red { 0%,100%{opacity:1} 50%{opacity:.6} }
+.lives-display { font-size: 1rem; letter-spacing: 2px; }
+.score-display {
+  font-size: 1rem; font-weight: 800; color: var(--gold);
+  background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.3);
+  border-radius: 8px; padding: 4px 10px;
+}
+
+/* Progress bar */
+.progress-bar {
+  height: 4px; background: var(--card2);
+  border-radius: 2px; margin-bottom: 14px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--purple-l));
+  border-radius: 2px;
+  transition: width .4s ease;
+}
+.progress-label {
+  text-align: right; font-size: 0.75rem; color: var(--muted);
+  margin-bottom: 8px;
+}
+
+/* Streak badge */
+.streak-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.4);
+  border-radius: 20px; padding: 4px 12px;
+  font-size: 0.85rem; font-weight: 700; color: var(--gold);
+  margin-bottom: 12px; width: fit-content;
+  animation: pop-in .3s ease;
+}
+@keyframes pop-in {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Question card */
+.question-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 20px;
+  margin-bottom: 16px;
+  flex: 0 0 auto;
+  box-shadow: var(--shadow);
+}
+.q-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.q-category-tag {
+  font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; padding: 3px 10px;
+  border-radius: 20px; background: rgba(124,58,237,.2);
+  border: 1px solid rgba(124,58,237,.4); color: var(--purple-l);
+}
+.q-stars { font-size: 0.85rem; color: var(--gold); }
+.q-text {
+  font-size: 1.05rem; line-height: 1.65;
+}
+.q-text .katex { font-size: 1em; }
+.q-text .katex-display { margin: .5em 0; }
+
+/* Answer buttons */
+.answers-grid {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 16px;
+}
+.answer-btn {
+  background: var(--card2); border: 1.5px solid var(--border);
+  border-radius: var(--r); padding: 14px 16px;
+  color: var(--text); font-size: 0.95rem; text-align: left;
+  display: flex; align-items: flex-start; gap: 12px;
+  transition: transform .12s, border-color .15s, background .15s;
+  line-height: 1.5;
+}
+.answer-btn:active { transform: scale(.98); }
+.answer-btn:hover:not(:disabled) { border-color: var(--purple); background: rgba(124,58,237,.1); }
+.answer-btn:disabled { cursor: default; }
+.answer-btn .katex { font-size: 1em; }
+.answer-letter {
+  width: 26px; height: 26px; min-width: 26px;
+  border-radius: 50%; background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700; border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.answer-btn.correct { border-color: var(--green)!important; background: rgba(16,185,129,.15)!important; }
+.answer-btn.correct .answer-letter { background: var(--green); color: #fff; border-color: var(--green); }
+.answer-btn.wrong { border-color: var(--red)!important; background: rgba(239,68,68,.15)!important; }
+.answer-btn.wrong .answer-letter { background: var(--red); color: #fff; border-color: var(--red); }
+.answer-btn.dim { opacity: .45; }
+
+/* Shake animation */
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-6px)}
+  80%{transform:translateX(6px)}
+}
+.shake { animation: shake .4s ease; }
+
+/* Explanation box */
+.explanation-box {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 16px;
+  margin-bottom: 16px;
+  animation: slide-up .3s ease;
+}
+@keyframes slide-up {
+  from { opacity:0; transform:translateY(12px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.expl-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.expl-icon { font-size: 1.1rem; }
+.expl-title { font-weight: 700; font-size: 0.9rem; }
+.expl-text {
+  font-size: 0.88rem; color: var(--muted); line-height: 1.6;
+}
+.expl-text .katex { font-size: 1em; }
+.next-btn {
+  width: 100%; margin-top: 14px;
+  background: linear-gradient(135deg, var(--purple), var(--purple-l));
+  color: white; font-weight: 700; font-size: 1rem;
+  padding: 14px; border-radius: var(--r);
+  transition: transform .15s, opacity .15s;
+  box-shadow: 0 4px 16px rgba(124,58,237,.35);
+}
+.next-btn:active { transform: scale(.97); opacity: .9; }
+
+/* ===== RESULT SCREEN ===== */
+.result-hero {
+  flex: 1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  padding: 20px 0;
+}
+.result-emoji { font-size: 4rem; margin-bottom: 12px; animation: bounce .5s ease; }
+@keyframes bounce {
+  0%,100%{transform:scale(1)}
+  30%{transform:scale(1.25)}
+  60%{transform:scale(.9)}
+}
+.result-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 4px; }
+.result-subtitle { color: var(--muted); margin-bottom: 24px; }
+.result-score-big {
+  font-size: 3.5rem; font-weight: 900; color: var(--gold);
+  line-height: 1; margin-bottom: 6px;
+}
+.result-pts-label { font-size: 0.85rem; color: var(--muted); margin-bottom: 28px; }
+.result-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; width: 100%; margin-bottom: 24px;
+}
+.result-stat {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px;
+  text-align: center;
+}
+.result-stat strong { display:block; font-size:1.4rem; font-weight:800; }
+.result-stat span { font-size:0.75rem; color:var(--muted); }
+.xp-gained-box {
+  width: 100%;
+  background: rgba(124,58,237,.12); border: 1px solid rgba(124,58,237,.3);
+  border-radius: var(--r); padding: 14px;
+  text-align: center; margin-bottom: 16px;
+}
+.xp-gained-box strong { font-size: 1.2rem; color: var(--purple-l); }
+.new-badges-box { width: 100%; margin-bottom: 16px; }
+.new-badge {
+  background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.4);
+  border-radius: var(--r); padding: 10px 16px;
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 8px;
+}
+.new-badge-icon { font-size: 1.4rem; }
+.new-badge-text strong { display:block; font-size:0.9rem; }
+.new-badge-text span { font-size:0.78rem; color:var(--muted); }
+
+.result-actions { display:flex; flex-direction:column; gap:10px; padding-bottom:24px; }
+.btn-primary {
+  background: linear-gradient(135deg, var(--purple), var(--purple-l));
+  color: white; font-weight: 700; font-size: 1rem;
+  padding: 16px; border-radius: var(--r);
+  transition: transform .15s; box-shadow: 0 4px 16px rgba(124,58,237,.35);
+}
+.btn-primary:active { transform: scale(.97); }
+.btn-secondary {
+  background: var(--card2); color: var(--text); font-weight: 600;
+  font-size: 1rem; padding: 14px; border-radius: var(--r);
+  border: 1px solid var(--border); transition: transform .15s;
+}
+.btn-secondary:active { transform: scale(.97); }
+
+/* ===== STATS SCREEN ===== */
+.stats-content { flex:1; }
+.stats-section { margin-bottom: 24px; }
+.stats-section h3 { font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin-bottom:12px; }
+.stats-big-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:24px; }
+.stats-big-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 16px; text-align:center;
+}
+.stats-big-card strong { display:block; font-size:1.6rem; font-weight:900; }
+.stats-big-card span { font-size:0.75rem; color:var(--muted); }
+.cat-progress-item { margin-bottom:14px; }
+.cat-progress-label { display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:5px; }
+.cat-progress-bar { height:6px; background:var(--card2); border-radius:3px; overflow:hidden; }
+.cat-progress-fill { height:100%; border-radius:3px; transition:width .6s ease; }
+.badges-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+.badge-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 14px;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  text-align:center; opacity:.4;
+  transition: opacity .3s;
+}
+.badge-card.earned { opacity:1; border-color:var(--gold); background:rgba(245,158,11,.07); }
+.badge-card .badge-icon { font-size:2rem; }
+.badge-card strong { font-size:0.85rem; }
+.badge-card span { font-size:0.72rem; color:var(--muted); }
+.reset-btn {
+  width:100%; padding:12px; border-radius:var(--r);
+  background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3);
+  color:var(--red); font-weight:600; margin-top:16px;
+  transition:transform .15s;
+}
+.reset-btn:active { transform:scale(.97); }
+
+/* ===== CONFETTI ===== */
+#confetti-canvas {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  pointer-events:none; z-index:9999;
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+  background: var(--card); border:1px solid var(--border);
+  padding:10px 20px; border-radius:20px;
+  font-size:0.9rem; font-weight:600;
+  box-shadow:var(--shadow); z-index:1000;
+  animation: toast-in .3s ease;
+  white-space:nowrap;
+}
+@keyframes toast-in {
+  from{opacity:0;transform:translateX(-50%) translateY(10px)}
+  to{opacity:1;transform:translateX(-50%) translateY(0)}
+}
+
+/* ===== KaTeX overrides ===== */
+.katex { font-size: 1em !important; }
+.katex-display > .katex { font-size: 1.1em !important; }
+
+/* ===== UTILITY ===== */
+.mt-auto { margin-top: auto; }
+.text-center { text-align: center; }
+.hidden { display: none !important; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ==================== SCREENS ==================== -->
+
+<!-- HOME -->
+<div id="s-home" class="screen active">
+  <header class="home-header">
+    <div class="logo-wrap">
+      <div class="logo-icon">∑</div>
+      <div class="logo-text">
+        <h1>Suite & Match</h1>
+        <p>Révisions Terminale · Suites</p>
+      </div>
+    </div>
+    <button class="icon-btn" onclick="goStats()" title="Statistiques">📊</button>
+  </header>
+
+  <div class="xp-section">
+    <div class="xp-row">
+      <div class="level-pill" id="level-pill">Niveau 1</div>
+      <div class="xp-bar"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+      <div class="xp-label" id="xp-label">0 XP</div>
+    </div>
+  </div>
+
+  <div class="mini-stats">
+    <div class="mini-stat">
+      <strong id="home-total">0</strong>
+      <span>réponses</span>
+    </div>
+    <div class="mini-stat">
+      <strong id="home-pct">—</strong>
+      <span>réussite</span>
+    </div>
+    <div class="mini-stat">
+      <strong id="home-streak">0</strong>
+      <span>record série 🔥</span>
+    </div>
+  </div>
+
+  <p class="section-title">🎮 Choisir un mode</p>
+  <div class="mode-grid">
+    <button class="mode-card" onclick="startTraining()">
+      <span class="mode-icon">📚</span>
+      <strong>Entraînement</strong>
+      <span>Choisis ton thème</span>
+    </button>
+    <button class="mode-card sprint" onclick="startSprint()">
+      <span class="mode-icon">⚡</span>
+      <strong>Sprint</strong>
+      <span>90 secondes !</span>
+    </button>
+    <button class="mode-card survival" onclick="startSurvival()">
+      <span class="mode-icon">💀</span>
+      <strong>Survie</strong>
+      <span>3 vies, tiens bon</span>
+    </button>
+    <button class="mode-card daily" onclick="startDaily()">
+      <span class="mode-icon">🌟</span>
+      <strong>Défi du jour</strong>
+      <span>10 questions / jour</span>
+    </button>
+  </div>
+
+  <p class="section-title">🏅 Mes badges</p>
+  <div class="badges-row" id="home-badges"></div>
+</div>
+
+<!-- CATEGORY SELECTION -->
+<div id="s-categories" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="showScreen('s-home')">← Retour</button>
+    <h2>📚 Entraînement</h2>
+  </div>
+  <div class="cat-list" id="cat-list"></div>
+</div>
+
+<!-- GAME -->
+<div id="s-game" class="screen">
+  <div class="game-topbar">
+    <button class="quit-btn" onclick="confirmQuit()">✕</button>
+    <div class="game-mode-label" id="g-mode-label">Sprint</div>
+    <div class="lives-display" id="g-lives"></div>
+    <div class="g-timer hidden" id="g-timer">90</div>
+    <div class="score-display" id="g-score">0 pts</div>
+  </div>
+  <div class="progress-label" id="g-progress">1 / 10</div>
+  <div class="progress-bar"><div class="progress-fill" id="g-progress-fill" style="width:0%"></div></div>
+
+  <div class="streak-badge hidden" id="streak-badge">🔥 Série × <span id="streak-mult">2</span></div>
+
+  <div class="question-card">
+    <div class="q-meta">
+      <div class="q-category-tag" id="q-cat-tag">Définitions</div>
+      <div class="q-stars" id="q-stars">★☆☆</div>
+    </div>
+    <div class="q-text" id="q-text"></div>
+  </div>
+
+  <div class="answers-grid" id="answers-grid"></div>
+
+  <div class="explanation-box hidden" id="explanation-box">
+    <div class="expl-header">
+      <span class="expl-icon" id="expl-icon">💡</span>
+      <span class="expl-title" id="expl-title">Explication</span>
+    </div>
+    <div class="expl-text" id="expl-text"></div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Suivant →</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="s-result" class="screen">
+  <div class="result-hero">
+    <div class="result-emoji" id="r-emoji">🎉</div>
+    <div class="result-title" id="r-title">Bravo !</div>
+    <div class="result-subtitle" id="r-subtitle">Belle performance !</div>
+    <div class="result-score-big" id="r-score">0</div>
+    <div class="result-pts-label">points</div>
+    <div class="result-grid">
+      <div class="result-stat">
+        <strong id="r-correct">0</strong>
+        <span>bonnes réponses</span>
+      </div>
+      <div class="result-stat">
+        <strong id="r-pct">0%</strong>
+        <span>réussite</span>
+      </div>
+      <div class="result-stat">
+        <strong id="r-streak">0</strong>
+        <span>meilleure série</span>
+      </div>
+      <div class="result-stat">
+        <strong id="r-best">0</strong>
+        <span>record personnel</span>
+      </div>
+    </div>
+    <div class="xp-gained-box" id="xp-gained-box">
+      <strong>+<span id="xp-gained-val">0</span> XP gagnés !</strong>
+    </div>
+    <div class="new-badges-box" id="new-badges-box"></div>
+  </div>
+  <div class="result-actions">
+    <button class="btn-primary" id="r-replay-btn" onclick="replayGame()">🔄 Rejouer</button>
+    <button class="btn-secondary" onclick="showScreen('s-home')">🏠 Accueil</button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div id="s-stats" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="showScreen('s-home')">← Retour</button>
+    <h2>📊 Statistiques</h2>
+  </div>
+  <div class="stats-content" id="stats-content"></div>
+</div>
+
+<canvas id="confetti-canvas" class="hidden"></canvas>
+
+<!-- ==================== SCRIPTS ==================== -->
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script>
+'use strict';
+
+/* ============================================================
+   MATH HELPER
+   ============================================================ */
+function math(text) {
+  if (!text || typeof text !== 'string') return text || '';
+  text = text.replace(/\$\$([^$]*)\$\$/g, (_, m) => {
+    try { return katex.renderToString(m, { displayMode: true, throwOnError: false }); }
+    catch(e) { return m; }
+  });
+  text = text.replace(/\$([^$]*)\$/g, (_, m) => {
+    try { return katex.renderToString(m, { displayMode: false, throwOnError: false }); }
+    catch(e) { return m; }
+  });
+  return text;
+}
+
+/* ============================================================
+   QUESTION BANK
+   ============================================================ */
+const CATS = {
+  defs:      { name:'Définitions',            emoji:'📖', color:'#a855f7' },
+  calculs:   { name:'Calcul de termes',       emoji:'🔢', color:'#3b82f6' },
+  monotonie: { name:'Monotonie',              emoji:'📈', color:'#10b981' },
+  bornes:    { name:'Bornes',                 emoji:'🎯', color:'#f59e0b' },
+  limites:   { name:'Limites',                emoji:'∞',  color:'#ef4444' },
+  operations:{ name:'Opérations sur limites', emoji:'⚙️', color:'#06b6d4' },
+  arith_geo: { name:'Suites arith. & géom.',  emoji:'📐', color:'#84cc16' },
+  recurrence:{ name:'Récurrence',             emoji:'🔄', color:'#f97316' },
+};
+
+/* Format: { q, cat, d, opts:[4], ans, expl } */
+const Q = [
+
+/* ---- DÉFINITIONS (d=1) ---- */
+{ q:'Une suite $(u_n)$ est <strong>croissante</strong> si et seulement si :',
+  cat:'defs', d:1, ans:0,
+  opts:['$u_{n+1} \\geq u_n$ pour tout $n \\in \\mathbb{N}$',
+        '$u_{n+1} \\leq u_n$ pour tout $n \\in \\mathbb{N}$',
+        '$u_{n+1} = u_n$ pour tout $n \\in \\mathbb{N}$',
+        '$u_{n+1} > 0$ pour tout $n \\in \\mathbb{N}$'],
+  expl:'Par définition, $(u_n)$ est croissante si chaque terme est supérieur ou égal au précédent : $u_{n+1} \\geq u_n$ pour tout $n$.' },
+
+{ q:'Une suite $(u_n)$ est définie <strong>explicitement</strong> si :',
+  cat:'defs', d:1, ans:1,
+  opts:['chaque terme se calcule à partir du terme précédent',
+        'chaque terme dépend uniquement de son indice $n$',
+        'la suite est constante',
+        'la suite est bornée'],
+  expl:'Une suite est définie explicitement (ou en fonction de $n$) quand on peut calculer $u_n$ directement depuis $n$, sans connaître les termes précédents. Exemple : $u_n = 3n - 4$.' },
+
+{ q:'Qu\'est-ce qu\'une suite <strong>convergente</strong> ?',
+  cat:'defs', d:1, ans:2,
+  opts:['une suite croissante et majorée',
+        'une suite définie sur $\\mathbb{N}$',
+        'une suite qui admet une limite finie $\\ell \\in \\mathbb{R}$',
+        'une suite géométrique'],
+  expl:'Une suite convergente est une suite qui possède une limite $\\ell$ réelle (finie). Si la limite n\'existe pas ou est $\\pm\\infty$, la suite est divergente.' },
+
+{ q:'Une suite $(u_n)$ est <strong>bornée</strong> si elle est :',
+  cat:'defs', d:1, ans:3,
+  opts:['croissante puis décroissante',
+        'convergente vers 0',
+        'uniquement majorée',
+        'majorée ET minorée'],
+  expl:'Une suite est bornée si et seulement si elle est à la fois majorée (il existe $M$ tel que $u_n \\leq M$) et minorée (il existe $m$ tel que $u_n \\geq m$).' },
+
+{ q:'La <strong>représentation graphique</strong> d\'une suite $(u_n)$ est :',
+  cat:'defs', d:1, ans:0,
+  opts:['un nuage de points de coordonnées $(n\\,;u_n)$',
+        'une courbe continue',
+        'un histogramme',
+        'une fonction définie sur $\\mathbb{R}$'],
+  expl:'Une suite est définie sur $\\mathbb{N}$, donc sa représentation est un nuage de points discrets aux coordonnées $(n, u_n)$, pas une courbe continue.' },
+
+{ q:'Une suite <strong>divergente</strong> est une suite qui :',
+  cat:'defs', d:1, ans:2,
+  opts:['tend nécessairement vers $+\\infty$',
+        'est non bornée',
+        'ne converge pas (pas de limite finie)',
+        'n\'est pas monotone'],
+  expl:'Une suite diverge si elle n\'a pas de limite finie : elle peut tendre vers $\\pm\\infty$, ou osciller sans limite (comme $(-1)^n$).' },
+
+{ q:'$(u_n)$ est <strong>majorée</strong> s\'il existe $M \\in \\mathbb{R}$ tel que :',
+  cat:'defs', d:1, ans:1,
+  opts:['$u_n \\geq M$ pour tout $n \\in \\mathbb{N}$',
+        '$u_n \\leq M$ pour tout $n \\in \\mathbb{N}$',
+        '$u_0 \\leq M$',
+        '$|u_n| = M$'],
+  expl:'Être majorée signifie être bornée par le haut : il existe un réel $M$ au-dessus duquel aucun terme ne dépasse.' },
+
+{ q:'Pour étudier la monotonie d\'une suite, la méthode principale consiste à calculer :',
+  cat:'defs', d:1, ans:0,
+  opts:['$u_{n+1} - u_n$ puis à étudier son signe',
+        '$u_n \\times u_{n+1}$ puis à étudier son signe',
+        'la limite de la suite',
+        'le terme $u_0$ uniquement'],
+  expl:'On étudie le signe de $u_{n+1} - u_n$. Si ce signe est positif pour tout $n$, la suite est croissante ; s\'il est négatif, la suite est décroissante.' },
+
+{ q:'Une suite <strong>constante</strong> vérifie, pour tout $n \\in \\mathbb{N}$ :',
+  cat:'defs', d:1, ans:3,
+  opts:['$u_n = 0$',
+        '$u_{n+1} > u_n$',
+        '$u_{n+1} < u_n$',
+        '$u_{n+1} = u_n$'],
+  expl:'Une suite constante a tous ses termes égaux : $u_{n+1} = u_n$ pour tout $n$. Elle est à la fois croissante et décroissante.' },
+
+{ q:'La suite $(q^n)$ <strong>converge vers 0</strong> si et seulement si :',
+  cat:'defs', d:1, ans:2,
+  opts:['$q > 1$',
+        '$q \\geq 1$',
+        '$-1 < q < 1$',
+        '$q \\leq -1$'],
+  expl:'Résultat fondamental : $|q|<1 \\Rightarrow q^n \\to 0$. Si $q>1$, $q^n \\to +\\infty$. Si $q \\leq -1$, $(q^n)$ diverge.' },
+
+/* ---- CALCUL DE TERMES (d=1-2) ---- */
+{ q:'Soit $u_n = 3n - 4$. Calculer $u_2$.',
+  cat:'calculs', d:1, ans:1,
+  opts:['$-1$','$2$','$6$','$10$'],
+  expl:'$u_2 = 3 \\times 2 - 4 = 6 - 4 = 2$.' },
+
+{ q:'Soit $v_n = 2n^2 + 1$. Calculer $v_3$.',
+  cat:'calculs', d:1, ans:2,
+  opts:['$7$','$15$','$19$','$21$'],
+  expl:'$v_3 = 2 \\times 3^2 + 1 = 2 \\times 9 + 1 = 19$.' },
+
+{ q:'Soit $u_0 = 2$ et $u_{n+1} = 3u_n + 4$. Calculer $u_1$.',
+  cat:'calculs', d:1, ans:0,
+  opts:['$10$','$8$','$12$','$6$'],
+  expl:'$u_1 = 3u_0 + 4 = 3 \\times 2 + 4 = 10$.' },
+
+{ q:'Soit $u_0 = 1$ et $u_{n+1} = 2u_n - 1$. Calculer $u_2$.',
+  cat:'calculs', d:1, ans:3,
+  opts:['$3$','$0$','$2$','$1$'],
+  expl:'$u_1 = 2 \\times 1 - 1 = 1$, puis $u_2 = 2 \\times 1 - 1 = 1$. La suite est constante !' },
+
+{ q:'Soit $u_n = \\dfrac{n}{n+1}$. Calculer $u_4$.',
+  cat:'calculs', d:1, ans:1,
+  opts:['$\\dfrac{3}{4}$','$\\dfrac{4}{5}$','$\\dfrac{5}{6}$','$1$'],
+  expl:'$u_4 = \\dfrac{4}{4+1} = \\dfrac{4}{5}$.' },
+
+{ q:'Suite de Fibonacci : $F_0=1,\\ F_1=1,\\ F_{n+2}=F_{n+1}+F_n$. Calculer $F_4$.',
+  cat:'calculs', d:2, ans:2,
+  opts:['$4$','$2$','$5$','$3$'],
+  expl:'$F_2 = 1+1=2$, $F_3=2+1=3$, $F_4=3+2=5$.' },
+
+{ q:'Soit $u_n = \\left(\\dfrac{1}{2}\\right)^n$. Calculer $u_3$.',
+  cat:'calculs', d:1, ans:0,
+  opts:['$\\dfrac{1}{8}$','$\\dfrac{1}{6}$','$\\dfrac{1}{4}$','$\\dfrac{1}{2}$'],
+  expl:'$u_3 = \\left(\\dfrac{1}{2}\\right)^3 = \\dfrac{1}{8}$.' },
+
+{ q:'Soit $u_n = (-1)^n$. Quelles sont les valeurs de $u_0, u_1, u_2, u_3$ ?',
+  cat:'calculs', d:1, ans:3,
+  opts:['$0, 1, 0, -1$','$-1, 1, -1, 1$','$1, 1, -1, -1$','$1, -1, 1, -1$'],
+  expl:'$u_0=(-1)^0=1$, $u_1=(-1)^1=-1$, $u_2=(-1)^2=1$, $u_3=(-1)^3=-1$. La suite alterne entre 1 et -1.' },
+
+{ q:'Soit $u_n = \\cos\\left(n\\dfrac{\\pi}{2}\\right)$. Calculer $u_4$.',
+  cat:'calculs', d:2, ans:1,
+  opts:['$-1$','$1$','$0$','$\\dfrac{\\sqrt{2}}{2}$'],
+  expl:'$u_4 = \\cos\\left(4\\cdot\\dfrac{\\pi}{2}\\right) = \\cos(2\\pi) = 1$.' },
+
+{ q:'Soit $u_0 = 5$, $u_{n+1} = u_n + 2n - 1$. Calculer $u_2$.',
+  cat:'calculs', d:2, ans:2,
+  opts:['$4$','$6$','$5$','$8$'],
+  expl:'$u_1 = 5 + 2(0)-1 = 4$, puis $u_2 = 4 + 2(1)-1 = 5$.' },
+
+/* ---- MONOTONIE (d=1-2) ---- */
+{ q:'La suite $u_n = 3n + 1$ est :',
+  cat:'monotonie', d:1, ans:1,
+  opts:['décroissante','croissante','constante','non monotone'],
+  expl:'$u_{n+1} - u_n = 3(n+1)+1-(3n+1) = 3 > 0$ pour tout $n$. Donc $(u_n)$ est strictement croissante.' },
+
+{ q:'La suite $u_n = -n^2$ est :',
+  cat:'monotonie', d:1, ans:0,
+  opts:['décroissante','croissante','constante','non monotone'],
+  expl:'$u_{n+1} - u_n = -(n+1)^2-(-n^2) = -2n-1 < 0$ pour tout $n \\geq 0$. Donc $(u_n)$ est strictement décroissante.' },
+
+{ q:'La suite $u_n = \\dfrac{1}{n}$ pour $n \\geq 1$ est :',
+  cat:'monotonie', d:1, ans:1,
+  opts:['croissante','décroissante','constante','non monotone'],
+  expl:'$u_{n+1} - u_n = \\dfrac{1}{n+1} - \\dfrac{1}{n} = \\dfrac{-1}{n(n+1)} < 0$. Donc $(u_n)$ est strictement décroissante.' },
+
+{ q:'Si $u_{n+1} - u_n > 0$ pour tout $n \\in \\mathbb{N}$, la suite est :',
+  cat:'monotonie', d:1, ans:2,
+  opts:['décroissante','non monotone','strictement croissante','constante'],
+  expl:'Si $u_{n+1} - u_n > 0$ (strictement positif) pour tout $n$, la suite est strictement croissante.' },
+
+{ q:'La suite $u_n = \\left(\\dfrac{3}{4}\\right)^n$ est :',
+  cat:'monotonie', d:1, ans:0,
+  opts:['décroissante','croissante','constante','non monotone'],
+  expl:'$\\dfrac{u_{n+1}}{u_n} = \\dfrac{3}{4} < 1$ et $u_n > 0$, donc $u_{n+1} < u_n$ : la suite est décroissante.' },
+
+{ q:'La suite $u_n = (-1)^n$ est-elle monotone ?',
+  cat:'monotonie', d:1, ans:2,
+  opts:['oui, croissante','oui, décroissante','non, pas monotone','oui, constante'],
+  expl:'$u_0=1, u_1=-1, u_2=1$ : $u_0 > u_1 < u_2$. La suite n\'est ni croissante ni décroissante : elle n\'est pas monotone.' },
+
+{ q:'On a $u_{n+1} - u_n = \\dfrac{1-n}{2^{n+1}}$. Pour $n \\geq 1$, la suite $(u_n)$ est :',
+  cat:'monotonie', d:2, ans:1,
+  opts:['croissante','décroissante','constante','non monotone'],
+  expl:'Pour $n \\geq 1$ : $1-n \\leq 0$ et $2^{n+1}>0$, donc $u_{n+1}-u_n \\leq 0$. La suite est décroissante pour $n \\geq 1$.' },
+
+{ q:'Pour montrer qu\'une suite est croissante, on peut aussi montrer que $\\dfrac{u_{n+1}}{u_n} > 1$. Cette méthode est valide si :',
+  cat:'monotonie', d:2, ans:0,
+  opts:['$u_n > 0$ pour tout $n$','$u_n < 0$ pour tout $n$','$u_n = 0$ pour un $n$','toujours, sans condition'],
+  expl:'Si $u_n > 0$, alors $u_{n+1} > u_n \\Leftrightarrow \\dfrac{u_{n+1}}{u_n} > 1$. Il faut impérativement que les termes soient positifs pour que cette équivalence soit valide.' },
+
+/* ---- BORNES (d=1-2) ---- */
+{ q:'La suite $u_n = \\cos(n)$ est :',
+  cat:'bornes', d:1, ans:2,
+  opts:['majorée uniquement','minorée uniquement','bornée','ni majorée ni minorée'],
+  expl:'$-1 \\leq \\cos(n) \\leq 1$ pour tout $n$, donc la suite est majorée par $1$ et minorée par $-1$ : elle est bornée.' },
+
+{ q:'La suite $u_n = n$ est :',
+  cat:'bornes', d:1, ans:1,
+  opts:['majorée et minorée (bornée)','minorée mais pas majorée','majorée mais pas minorée','ni majorée ni minorée'],
+  expl:'$u_n = n \\geq 0$ pour tout $n \\in \\mathbb{N}$ : la suite est minorée (par 0). Mais elle n\'est pas majorée car $n \\to +\\infty$.' },
+
+{ q:'Une suite <strong>croissante</strong> est toujours :',
+  cat:'bornes', d:1, ans:0,
+  opts:['minorée (par $u_0$)','majorée','bornée','convergente'],
+  expl:'Une suite croissante vérifie $u_n \\geq u_0$ pour tout $n$ : elle est minorée par son premier terme. En revanche, elle peut très bien ne pas être majorée (ex. $u_n = n$).' },
+
+{ q:'La suite $u_n = \\dfrac{1}{n}$ pour $n \\geq 1$ est minorée par :',
+  cat:'bornes', d:1, ans:2,
+  opts:['$1$','$-1$','$0$','$\\dfrac{1}{2}$'],
+  expl:'$u_n = \\dfrac{1}{n} > 0$ pour tout $n \\geq 1$, donc $0$ est un minorant. (Ici $0$ n\'est pas atteint, mais c\'est bien un minorant.)' },
+
+{ q:'La suite $u_n = \\dfrac{(-1)^n}{n}$ pour $n \\geq 1$ est-elle bornée ?',
+  cat:'bornes', d:2, ans:0,
+  opts:['Oui : $|u_n| \\leq 1$ pour tout $n \\geq 1$','Non : elle tend vers $\\pm\\infty$','Seulement majorée','Seulement minorée'],
+  expl:'$\\left|\\dfrac{(-1)^n}{n}\\right| = \\dfrac{1}{n} \\leq 1$ pour $n \\geq 1$. Donc $-1 \\leq u_n \\leq 1$ : la suite est bornée.' },
+
+{ q:'Une suite bornée est-elle <strong>nécessairement</strong> convergente ?',
+  cat:'bornes', d:1, ans:1,
+  opts:['Oui, toujours','Non : $(-1)^n$ est bornée mais diverge','Non, jamais','Oui, si elle est décroissante'],
+  expl:'Non ! La suite $(-1)^n$ est bornée (entre $-1$ et $1$) mais n\'a pas de limite : elle n\'est pas convergente. La réciproque est vraie : toute suite convergente est bornée.' },
+
+/* ---- LIMITES (d=1-2) ---- */
+{ q:'$\\displaystyle\\lim_{n\\to+\\infty} \\dfrac{1}{n} = ?$',
+  cat:'limites', d:1, ans:2,
+  opts:['$+\\infty$','$1$','$0$','$-\\infty$'],
+  expl:'$\\dfrac{1}{n} \\to 0$ car le numérateur reste fixé (1) tandis que le dénominateur grandit sans limite.' },
+
+{ q:'$\\displaystyle\\lim_{n\\to+\\infty} n^2 = ?$',
+  cat:'limites', d:1, ans:0,
+  opts:['$+\\infty$','$0$','$1$','pas de limite'],
+  expl:'$n^2 \\to +\\infty$ : c\'est une suite divergente vers $+\\infty$.' },
+
+{ q:'$\\displaystyle\\lim_{n\\to+\\infty} \\dfrac{2n+3}{n} = ?$',
+  cat:'limites', d:1, ans:1,
+  opts:['$3$','$2$','$0$','$+\\infty$'],
+  expl:'$\\dfrac{2n+3}{n} = 2 + \\dfrac{3}{n} \\to 2 + 0 = 2$.' },
+
+{ q:'La suite $u_n = (-1)^n$ admet-elle une limite ?',
+  cat:'limites', d:1, ans:3,
+  opts:['Oui, $0$','Oui, $1$','Oui, $-1$','Non, elle diverge (oscille entre $1$ et $-1$)'],
+  expl:'$(-1)^n$ alterne entre $1$ et $-1$ sans jamais se stabiliser. Elle diverge, sans tendre vers $\\pm\\infty$.' },
+
+{ q:'$\\displaystyle\\lim_{n\\to+\\infty} \\left(\\dfrac{1}{2}\\right)^n = ?$',
+  cat:'limites', d:1, ans:0,
+  opts:['$0$','$\\dfrac{1}{2}$','$+\\infty$','$1$'],
+  expl:'$-1 < \\dfrac{1}{2} < 1$, donc $\\left(\\dfrac{1}{2}\\right)^n \\to 0$.' },
+
+{ q:'$\\displaystyle\\lim_{n\\to+\\infty} 2^n = ?$',
+  cat:'limites', d:1, ans:1,
+  opts:['$0$','$+\\infty$','$2$','$-\\infty$'],
+  expl:'$2 > 1$, donc $2^n \\to +\\infty$.' },
+
+{ q:'$\\displaystyle\\lim_{n\\to+\\infty} (3n - 12) = ?$',
+  cat:'limites', d:1, ans:2,
+  opts:['$-12$','$0$','$+\\infty$','$-\\infty$'],
+  expl:'$3n - 12 \\to +\\infty$ car le terme en $n$ domine.' },
+
+{ q:'$\\displaystyle\\lim_{n\\to+\\infty} (-0{,}5)^n = ?$',
+  cat:'limites', d:2, ans:3,
+  opts:['Pas de limite','$-\\infty$','$-0{,}5$','$0$'],
+  expl:'$|-0{,}5| = 0{,}5 < 1$, donc $(-0{,}5)^n \\to 0$. La suite converge vers $0$ même si $q < 0$.' },
+
+{ q:'$\\displaystyle\\lim_{n\\to+\\infty} \\dfrac{3n^2 + n}{2n^2 - 1} = ?$',
+  cat:'limites', d:2, ans:1,
+  opts:['$+\\infty$','$\\dfrac{3}{2}$','$0$','$3$'],
+  expl:'On divise par $n^2$ : $\\dfrac{3 + \\frac{1}{n}}{2 - \\frac{1}{n^2}} \\to \\dfrac{3}{2}$.' },
+
+{ q:'Si $\\displaystyle\\lim_{n\\to+\\infty} u_n = \\ell \\in \\mathbb{R}$, la suite $(u_n)$ est :',
+  cat:'limites', d:1, ans:2,
+  opts:['monotone','non bornée','bornée','constante'],
+  expl:'Toute suite convergente est bornée (résultat important). En revanche, une suite bornée n\'est pas nécessairement convergente.' },
+
+/* ---- OPÉRATIONS SUR LIMITES (d=2-3) ---- */
+{ q:'$\\lim u_n = +\\infty$ et $\\lim v_n = +\\infty$. Alors $\\lim(u_n + v_n) = ?$',
+  cat:'operations', d:2, ans:0,
+  opts:['$+\\infty$','$0$','forme indéterminée','$-\\infty$'],
+  expl:'$(+\\infty) + (+\\infty) = +\\infty$ : ce n\'est pas une forme indéterminée.' },
+
+{ q:'$\\lim u_n = +\\infty$ et $\\lim v_n = -\\infty$. Alors $\\lim(u_n + v_n) = ?$',
+  cat:'operations', d:2, ans:2,
+  opts:['$+\\infty$','$-\\infty$','forme indéterminée $\\infty - \\infty$','$0$'],
+  expl:'$(+\\infty)+(-\\infty)$ est une <strong>forme indéterminée</strong> : on ne peut pas conclure sans calculer davantage.' },
+
+{ q:'$\\lim u_n = 3$ et $\\lim v_n = +\\infty$. Alors $\\lim(u_n \\times v_n) = ?$',
+  cat:'operations', d:2, ans:1,
+  opts:['$3$','$+\\infty$','forme indéterminée','$-\\infty$'],
+  expl:'$3 > 0$ et $v_n \\to +\\infty$, donc le produit tend vers $+\\infty$.' },
+
+{ q:'$\\lim u_n = 0$ et $\\lim v_n = +\\infty$. Alors $\\lim(u_n \\times v_n) = ?$',
+  cat:'operations', d:2, ans:3,
+  opts:['$0$','$+\\infty$','$1$','forme indéterminée $0 \\times \\infty$'],
+  expl:'$0 \\times \\infty$ est une forme indéterminée : le résultat peut être $0$, un réel, ou $\\pm\\infty$ selon les suites.' },
+
+{ q:'$\\lim u_n = -2$ et $\\lim v_n = -\\infty$. Alors $\\lim(u_n \\times v_n) = ?$',
+  cat:'operations', d:2, ans:0,
+  opts:['$+\\infty$','$-\\infty$','$2$','forme indéterminée'],
+  expl:'$(-2) \\times (-\\infty) = +\\infty$ : négatif $\\times$ négatif = positif.' },
+
+{ q:'$\\lim u_n = \\ell \\neq 0$ et $\\lim v_n = +\\infty$. Alors $\\lim \\dfrac{u_n}{v_n} = ?$',
+  cat:'operations', d:2, ans:1,
+  opts:['$\\ell$','$0$','$+\\infty$','forme indéterminée'],
+  expl:'$\\dfrac{\\ell}{+\\infty} = 0$ : un nombre fini divisé par quelque chose qui tend vers l\'infini tend vers $0$.' },
+
+{ q:'Le <strong>théorème des gendarmes</strong> affirme que si $u_n \\leq v_n \\leq w_n$ à partir d\'un certain rang et $\\lim u_n = \\lim w_n = \\ell$, alors :',
+  cat:'operations', d:2, ans:2,
+  opts:['$\\lim v_n = \\dfrac{\\ell}{2}$','$(v_n)$ est bornée','$\\lim v_n = \\ell$','$(v_n)$ est croissante'],
+  expl:'C\'est le théorème des gendarmes (ou des deux carabiniers). $(v_n)$ est "encadrée" et converge vers la même limite $\\ell$.' },
+
+{ q:'Pour calculer $\\displaystyle\\lim_{n\\to+\\infty}\\left(1 + \\dfrac{\\sin n}{n}\\right)$, on utilise $-1\\leq\\sin n\\leq 1$. La limite vaut :',
+  cat:'operations', d:3, ans:1,
+  opts:['pas de limite','$1$','$0$','$+\\infty$'],
+  expl:'$1-\\dfrac{1}{n} \\leq 1+\\dfrac{\\sin n}{n} \\leq 1+\\dfrac{1}{n}$. Les deux bornes tendent vers $1$, donc par le théorème des gendarmes, la limite est $1$.' },
+
+{ q:'$\\lim u_n = +\\infty$ et $\\lim v_n = +\\infty$. Alors $\\lim \\dfrac{u_n}{v_n} = ?$',
+  cat:'operations', d:2, ans:3,
+  opts:['$1$','$+\\infty$','$0$','forme indéterminée $\\dfrac{\\infty}{\\infty}$'],
+  expl:'$\\dfrac{\\infty}{\\infty}$ est une forme indéterminée. Exemple : $u_n=n^2,\\ v_n=n \\Rightarrow \\frac{u_n}{v_n}=n\\to+\\infty$; mais $u_n=n,\\ v_n=n \\Rightarrow \\frac{u_n}{v_n}=1$.' },
+
+/* ---- ARITH / GÉO (d=1-2) ---- */
+{ q:'Une suite <strong>arithmétique</strong> de premier terme $u_0=a$ et de raison $r$ a pour terme général :',
+  cat:'arith_geo', d:1, ans:1,
+  opts:['$u_n = a \\times r^n$','$u_n = a + rn$','$u_n = a^n + r$','$u_n = ar + n$'],
+  expl:'La raison $r$ est ajoutée à chaque terme : $u_n = u_0 + rn = a + rn$.' },
+
+{ q:'Une suite <strong>géométrique</strong> de premier terme $v_0$ et de raison $q$ a pour terme général :',
+  cat:'arith_geo', d:1, ans:2,
+  opts:['$v_n = v_0 + qn$','$v_n = v_0^n \\times q$','$v_n = v_0 \\times q^n$','$v_n = nv_0q$'],
+  expl:'La raison $q$ est multipliée à chaque terme : $v_n = v_0 \\times q^n$.' },
+
+{ q:'La suite $2, 5, 8, 11, \\ldots$ est :',
+  cat:'arith_geo', d:1, ans:0,
+  opts:['arithmétique de raison $3$','géométrique de raison $3$','arithmétique de raison $2$','ni arithmétique ni géométrique'],
+  expl:'$5-2=3$, $8-5=3$, $11-8=3$ : la différence est constante. C\'est une suite arithmétique de raison $r=3$.' },
+
+{ q:'La raison de la suite géométrique $3, 6, 12, 24, \\ldots$ est :',
+  cat:'arith_geo', d:1, ans:2,
+  opts:['$3$','$\\dfrac{1}{2}$','$2$','$\\dfrac{3}{2}$'],
+  expl:'$\\dfrac{6}{3}=2$, $\\dfrac{12}{6}=2$, $\\dfrac{24}{12}=2$ : le quotient est constant et vaut $2$.' },
+
+{ q:'Suite arithmétique de raison $r=3$ et $u_0=1$. Calculer $u_5$.',
+  cat:'arith_geo', d:1, ans:0,
+  opts:['$16$','$13$','$15$','$12$'],
+  expl:'$u_5 = u_0 + 5r = 1 + 5 \\times 3 = 16$.' },
+
+{ q:'La suite $4, 2, 1, \\dfrac{1}{2}, \\ldots$ est géométrique. Sa raison est :',
+  cat:'arith_geo', d:1, ans:1,
+  opts:['$2$','$\\dfrac{1}{2}$','$\\dfrac{1}{4}$','$-\\dfrac{1}{2}$'],
+  expl:'$\\dfrac{2}{4} = \\dfrac{1}{2}$. La raison est $q = \\dfrac{1}{2}$.' },
+
+/* ---- RÉCURRENCE (d=2-3) ---- */
+{ q:'Dans un raisonnement par récurrence, les étapes dans l\'ordre sont :',
+  cat:'recurrence', d:1, ans:2,
+  opts:['Hérédité → Initialisation → Conclusion',
+        'Conclusion → Initialisation → Hérédité',
+        'Initialisation → Hérédité → Conclusion',
+        'Hérédité → Conclusion → Initialisation'],
+  expl:'Le raisonnement par récurrence suit toujours : 1. Initialisation (vérifier $P_{n_0}$), 2. Hérédité (supposer $P_k$ et démontrer $P_{k+1}$), 3. Conclusion.' },
+
+{ q:'L\'<strong>hypothèse de récurrence</strong> (HR) consiste à :',
+  cat:'recurrence', d:1, ans:0,
+  opts:['Supposer que $P_k$ est vraie pour un entier $k$ fixé',
+        'Démontrer que $P_n$ est vraie pour tout $n$',
+        'Montrer que $P_0$ est vraie',
+        'Conclure la démonstration'],
+  expl:'Dans l\'hérédité, on fixe un entier $k \\geq n_0$ et on suppose $P_k$ vraie (c\'est l\'hypothèse de récurrence), puis on démontre $P_{k+1}$.' },
+
+{ q:'L\'<strong>initialisation</strong> dans un raisonnement par récurrence consiste à :',
+  cat:'recurrence', d:1, ans:1,
+  opts:['Supposer $P_k$ vraie pour tout $k$',
+        'Démontrer $P_{n_0}$ pour le premier entier $n_0$ concerné',
+        'Conclure la démonstration',
+        'Énoncer l\'objectif $P_{k+1}$'],
+  expl:'L\'initialisation prouve que la propriété est vraie pour le premier entier (souvent $n=0$ ou $n=1$). C\'est le "pied de la chaise".' },
+
+{ q:'Si on vérifie l\'hérédité mais <strong>pas</strong> l\'initialisation, peut-on conclure que $P_n$ est vraie pour tout $n$ ?',
+  cat:'recurrence', d:2, ans:1,
+  opts:['Oui, l\'hérédité seule suffit',
+        'Non, les deux sont indispensables',
+        'Oui, si la suite est croissante',
+        'Non, mais on peut conclure pour $n \\geq 1$'],
+  expl:'L\'initialisation ET l\'hérédité sont toutes les deux indispensables. Contre-exemple : $P_n : 0 \\leq u_n \\leq 1$ avec $u_0=2$, $u_{n+1}=u_n^2$. L\'hérédité est vraie mais $P_0$ est fausse, et aucun $P_n$ n\'est vrai.' },
+
+{ q:'Après l\'hérédité, dans la conclusion, on peut écrire :',
+  cat:'recurrence', d:1, ans:3,
+  opts:['"On a montré $P_k$."',
+        '"La suite est convergente."',
+        '"On a supposé $P_k$ vraie."',
+        '"Par principe de récurrence, $P_n$ est vraie pour tout $n \\geq n_0$."'],
+  expl:'La conclusion rappelle que les deux conditions du principe de récurrence (initialisation + hérédité) ont été vérifiées, ce qui permet de conclure que $P_n$ est vraie pour tout $n \\geq n_0$.' },
+
+{ q:'Soit $P_n$ : "$n^3-n$ est un multiple de $3$". Pour $n=0$, $n^3-n$ vaut :',
+  cat:'recurrence', d:1, ans:2,
+  opts:['$1$','$-1$','$0$','$3$'],
+  expl:'$0^3 - 0 = 0 = 3 \\times 0$ : c\'est bien un multiple de 3, donc $P_0$ est vraie.' },
+
+{ q:'On démontre par récurrence que $v_n = n(n+1)$. L\'hypothèse de récurrence $P_k$ s\'énonce :',
+  cat:'recurrence', d:2, ans:1,
+  opts:['"$v_{k+1} = (k+1)(k+2)$"',
+        '"$v_k = k(k+1)$"',
+        '"$v_k \\geq 0$"',
+        '"$v_{k+1} - v_k = 2k+2$"'],
+  expl:'$P_k$ énonce exactement la propriété au rang $k$ : on suppose que $v_k = k(k+1)$ est vraie.' },
+
+{ q:'On veut montrer par récurrence que $2^n \\geq n+1$ pour tout $n \\in \\mathbb{N}$. L\'initialisation (pour $n=0$) donne :',
+  cat:'recurrence', d:2, ans:0,
+  opts:['$2^0 = 1 \\geq 0+1 = 1$ ✓','$2^1 = 2 \\geq 1+1 = 2$ ✓','$2^0 = 1 \\geq 0$ ✓','$2^0 = 0$ ✗'],
+  expl:'Pour $n=0$ : $2^0 = 1$ et $0+1=1$, donc $1 \\geq 1$ est vraie. $P_0$ est vérifiée.' },
+
+{ q:'Soit $(u_n)$ définie par $u_0 = 2$, $u_{n+1} = u_n^2$. Soit $P_n$ : "$0 \\leq u_n \\leq 1$". L\'initialisation $P_0$ est :',
+  cat:'recurrence', d:3, ans:1,
+  opts:['vraie : $0 \\leq 2 \\leq 1$',
+        'fausse : $u_0 = 2 > 1$',
+        'vraie : $u_0 = 0$',
+        'vraie si $n \\geq 1$'],
+  expl:'$u_0 = 2$ et $2 > 1$, donc $P_0$ est fausse. On ne peut pas conclure par récurrence, même si l\'hérédité était vraie.' },
+
+/* ---- QUESTIONS SUPPLÉMENTAIRES D=2-3 ---- */
+{ q:'$\\displaystyle\\lim_{n\\to+\\infty} \\dfrac{n^2+3n}{n+1} = ?$',
+  cat:'limites', d:3, ans:2,
+  opts:['$3$','$0$','$+\\infty$','$1$'],
+  expl:'$\\dfrac{n^2+3n}{n+1} = \\dfrac{n(n+3)}{n+1} \\approx \\dfrac{n^2}{n} = n \\to +\\infty$. (Plus précisément, en divisant par $n$, on obtient $\\dfrac{n+3}{1+1/n} \\to +\\infty$.)' },
+
+{ q:'La suite $(u_n)$ avec $u_0 = 1$, $u_{n+1} = \\dfrac{1}{2}u_n + 1$ est :',
+  cat:'limites', d:3, ans:0,
+  opts:['croissante, bornée, converge vers $2$','décroissante, converge vers $0$','croissante, non bornée','oscillante'],
+  expl:'$u_{n+1}-u_n = 1 - \\dfrac{u_n}{2}$. Si $u_n < 2$, la différence est positive : la suite croît tant qu\'elle est en-dessous de $2$. Le point fixe $\\ell = \\dfrac{1}{2}\\ell+1$ donne $\\ell=2$.' },
+
+{ q:'Pour quelle valeur de $q$ la suite $(q^n)$ diverge-t-elle ?',
+  cat:'limites', d:2, ans:3,
+  opts:['$q=\\dfrac{1}{2}$','$q=-\\dfrac{1}{3}$','$q=\\dfrac{3}{4}$','$q=-2$'],
+  expl:'$(q^n)$ diverge si $|q|>1$ (ici $|-2|=2>1$) ou si $q \\leq -1$ (la suite oscille). Les trois autres options ont $|q|<1$, donc $q^n\\to 0$.' },
+
+{ q:'Soit $H_n = \\displaystyle\\sum_{k=1}^n \\dfrac{1}{k}$. La relation de récurrence reliant $H_n$ et $H_{n+1}$ est :',
+  cat:'calculs', d:2, ans:1,
+  opts:['$H_{n+1} = H_n + n$','$H_{n+1} = H_n + \\dfrac{1}{n+1}$','$H_{n+1} = H_n \\times \\dfrac{1}{n+1}$','$H_{n+1} = 2H_n$'],
+  expl:'$H_{n+1} = \\displaystyle\\sum_{k=1}^{n+1}\\dfrac{1}{k} = \\sum_{k=1}^{n}\\dfrac{1}{k} + \\dfrac{1}{n+1} = H_n + \\dfrac{1}{n+1}$.' },
+
+{ q:'Si $\\displaystyle\\lim_{n\\to+\\infty} u_n = +\\infty$ et $u_n \\leq v_n$ pour tout $n$, le théorème de comparaison donne :',
+  cat:'operations', d:2, ans:0,
+  opts:['$\\displaystyle\\lim_{n\\to+\\infty} v_n = +\\infty$','$\\displaystyle\\lim_{n\\to+\\infty} v_n = 0$','$(v_n)$ est bornée','on ne peut rien conclure'],
+  expl:'Si $u_n \\to +\\infty$ et $u_n \\leq v_n$, alors $(v_n)$ est aussi poussée vers $+\\infty$ (théorème de comparaison).' },
+
+{ q:'Soit $(u_n)$ arith. de raison $r=-2$ et $u_1 = 10$. Calculer $u_4$.',
+  cat:'arith_geo', d:2, ans:2,
+  opts:['$8$','$2$','$4$','$6$'],
+  expl:'$u_4 = u_1 + (4-1)r = 10 + 3\\times(-2) = 10 - 6 = 4$.' },
+
+{ q:'Que vaut $\\displaystyle\\sum_{k=0}^{n} q^k$ (somme géométrique) pour $q \\neq 1$ ?',
+  cat:'arith_geo', d:3, ans:1,
+  opts:['$nq$','$\\dfrac{1-q^{n+1}}{1-q}$','$\\dfrac{q^n-1}{q}$','$\\dfrac{q^{n+1}}{q-1}$'],
+  expl:'$\\displaystyle\\sum_{k=0}^{n} q^k = 1+q+q^2+\\cdots+q^n = \\dfrac{1-q^{n+1}}{1-q}$ pour $q \\neq 1$.' },
+
+{ q:'Démontrons que $4^n+5$ est multiple de $3$ pour $n \\in \\mathbb{N}$. Pour $n=0$, $4^0+5 = ?$',
+  cat:'recurrence', d:2, ans:0,
+  opts:['$6 = 3 \\times 2$ ✓','$5$','$4$','$9 = 3 \\times 3$ ✓'],
+  expl:'$4^0 + 5 = 1 + 5 = 6 = 3 \\times 2$. Donc $P_0$ est vraie : $4^0+5$ est bien un multiple de $3$.' },
+
+];
+
+/* ============================================================
+   BADGES
+   ============================================================ */
+const BADGES = [
+  { id:'first',    icon:'🎯', name:'Premier pas',       desc:'1ère bonne réponse',     test: s => s.totalCorrect >= 1 },
+  { id:'streak5',  icon:'🔥', name:'En feu !',          desc:'Série de 5 d\'affilée',  test: s => s.bestStreak >= 5 },
+  { id:'streak10', icon:'⚡', name:'Électrique',        desc:'Série de 10 d\'affilée', test: s => s.bestStreak >= 10 },
+  { id:'brain',    icon:'🧠', name:'Mathématicien',     desc:'50 bonnes réponses',     test: s => s.totalCorrect >= 50 },
+  { id:'level3',   icon:'🌟', name:'Expert',            desc:'Atteindre le niveau 3',  test: s => getLevel(s.xp) >= 3 },
+  { id:'level5',   icon:'🏆', name:'Champion',          desc:'Atteindre le niveau 5',  test: s => getLevel(s.xp) >= 5 },
+  { id:'hundred',  icon:'💯', name:'Centenaire',        desc:'100 bonnes réponses',    test: s => s.totalCorrect >= 100 },
+  { id:'perfect',  icon:'💎', name:'Sans faute',        desc:'Score parfait (10/10)',   test: s => s.hadPerfect },
+];
+
+/* ============================================================
+   XP / LEVELS
+   ============================================================ */
+const LEVEL_XP = [0, 100, 250, 500, 1000, 2000, 4000];
+function getLevel(xp) {
+  let l = 1;
+  for (let i = 1; i < LEVEL_XP.length; i++) {
+    if (xp >= LEVEL_XP[i]) l = i + 1; else break;
+  }
+  return l;
+}
+function getLevelProgress(xp) {
+  const l = getLevel(xp);
+  const lo = LEVEL_XP[l - 1] || 0;
+  const hi = LEVEL_XP[l] || LEVEL_XP[LEVEL_XP.length - 1] * 10;
+  return { level: l, pct: Math.min(100, ((xp - lo) / (hi - lo)) * 100) };
+}
+
+/* ============================================================
+   STORAGE
+   ============================================================ */
+const STORE_KEY = 'suite_match_v2';
+let save = {};
+
+function loadSave() {
+  try { save = JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch(e) { save = {}; }
+  save.xp          = save.xp || 0;
+  save.totalAnswered= save.totalAnswered || 0;
+  save.totalCorrect = save.totalCorrect || 0;
+  save.bestStreak   = save.bestStreak || 0;
+  save.bestScore    = save.bestScore || 0;
+  save.badges       = save.badges || [];
+  save.hadPerfect   = save.hadPerfect || false;
+  save.catCorrect   = save.catCorrect || {};
+  save.catTotal     = save.catTotal || {};
+  save.lastDaily    = save.lastDaily || '';
+  save.dailyDone    = save.dailyDone || false;
+}
+
+function persist() {
+  localStorage.setItem(STORE_KEY, JSON.stringify(save));
+}
+
+/* ============================================================
+   GAME STATE
+   ============================================================ */
+let gs = {};
+
+function initGame(mode, category) {
+  let pool = category === 'all' ? [...Q] : Q.filter(q => q.cat === category);
+  // Shuffle
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  if (mode === 'daily') pool = pool.slice(0, 10);
+  if (mode === 'sprint') pool = pool.slice(0, 40); // up to 40 in 90s
+  if (mode === 'survival') pool = pool.slice(0, 50);
+
+  gs = {
+    mode, category,
+    pool, idx: 0,
+    score: 0, correct: 0, wrong: 0,
+    streak: 0, bestStreak: 0,
+    lives: mode === 'survival' ? 3 : Infinity,
+    timeLeft: mode === 'sprint' ? 90 : null,
+    timerInterval: null,
+    answered: false,
+    xpGained: 0,
+  };
+}
+
+/* ============================================================
+   SCREEN MANAGEMENT
+   ============================================================ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   HOME SCREEN
+   ============================================================ */
+function renderHome() {
+  // XP / Level
+  const { level, pct } = getLevelProgress(save.xp);
+  document.getElementById('level-pill').textContent = 'Niveau ' + level;
+  document.getElementById('xp-fill').style.width = pct + '%';
+  document.getElementById('xp-label').textContent = save.xp + ' XP';
+  // Stats
+  document.getElementById('home-total').textContent = save.totalAnswered;
+  const pctTxt = save.totalAnswered > 0
+    ? Math.round(save.totalCorrect / save.totalAnswered * 100) + '%' : '—';
+  document.getElementById('home-pct').textContent = pctTxt;
+  document.getElementById('home-streak').textContent = save.bestStreak;
+  // Badges
+  const badgesEl = document.getElementById('home-badges');
+  badgesEl.innerHTML = '';
+  BADGES.forEach(b => {
+    const earned = save.badges.includes(b.id);
+    const el = document.createElement('div');
+    el.className = 'badge-chip' + (earned ? ' earned' : '');
+    el.innerHTML = `<span>${b.icon}</span><span>${b.name}</span>`;
+    el.title = b.desc;
+    badgesEl.appendChild(el);
+  });
+}
+
+/* ============================================================
+   CATEGORY SCREEN
+   ============================================================ */
+function renderCategories() {
+  const list = document.getElementById('cat-list');
+  list.innerHTML = '';
+
+  // All topics
+  const allBtn = document.createElement('button');
+  allBtn.className = 'cat-card all-topics';
+  allBtn.onclick = () => { startGame('training', 'all'); };
+  allBtn.innerHTML = `<span class="cat-emoji">🌈</span>
+    <div class="cat-info"><strong>Tous les thèmes</strong><span>${Q.length} questions mélangées</span></div>
+    <span class="cat-arrow">›</span>`;
+  list.appendChild(allBtn);
+
+  // Per category
+  Object.entries(CATS).forEach(([id, cat]) => {
+    const total = Q.filter(q => q.cat === id).length;
+    const done = save.catTotal[id] || 0;
+    const ok   = save.catCorrect[id] || 0;
+    const pct  = done > 0 ? Math.round(ok / done * 100) + '%' : '—';
+    const btn = document.createElement('button');
+    btn.className = 'cat-card';
+    btn.style.borderLeft = `3px solid ${cat.color}`;
+    btn.onclick = () => { startGame('training', id); };
+    btn.innerHTML = `<span class="cat-emoji">${cat.emoji}</span>
+      <div class="cat-info"><strong>${cat.name}</strong><span>${total} questions · Réussite : ${pct}</span></div>
+      <span class="cat-arrow">›</span>`;
+    list.appendChild(btn);
+  });
+}
+
+/* ============================================================
+   GAME FLOW
+   ============================================================ */
+function startTraining() {
+  renderCategories();
+  showScreen('s-categories');
+}
+
+function startSprint()   { startGame('sprint', 'all'); }
+function startSurvival() { startGame('survival', 'all'); }
+function startDaily()    {
+  const today = new Date().toISOString().slice(0, 10);
+  if (save.lastDaily === today && save.dailyDone) {
+    showToast('✅ Défi du jour déjà complété ! Reviens demain.');
+    return;
+  }
+  startGame('daily', 'all');
+}
+
+function startGame(mode, category) {
+  initGame(mode, category);
+  // UI setup
+  document.getElementById('g-mode-label').textContent =
+    mode === 'sprint' ? '⚡ Sprint' :
+    mode === 'survival' ? '💀 Survie' :
+    mode === 'daily' ? '🌟 Défi du jour' : '📚 Entraînement';
+
+  const timerEl = document.getElementById('g-timer');
+  if (mode === 'sprint') {
+    timerEl.classList.remove('hidden');
+    timerEl.textContent = gs.timeLeft;
+    gs.timerInterval = setInterval(tickTimer, 1000);
+  } else {
+    timerEl.classList.add('hidden');
+  }
+  updateLives();
+  updateScore();
+  showScreen('s-game');
+  renderQuestion();
+}
+
+function tickTimer() {
+  gs.timeLeft--;
+  const el = document.getElementById('g-timer');
+  el.textContent = gs.timeLeft;
+  el.classList.toggle('danger', gs.timeLeft <= 15);
+  if (gs.timeLeft <= 0) endGame();
+}
+
+function updateLives() {
+  const el = document.getElementById('g-lives');
+  if (!isFinite(gs.lives)) { el.textContent = ''; return; }
+  el.textContent = '❤️'.repeat(Math.max(0, gs.lives)) + '🖤'.repeat(Math.max(0, 3 - gs.lives));
+}
+
+function updateScore() {
+  document.getElementById('g-score').textContent = gs.score + ' pts';
+}
+
+/* ============================================================
+   RENDER QUESTION
+   ============================================================ */
+function renderQuestion() {
+  if (gs.idx >= gs.pool.length) { endGame(); return; }
+  const q = gs.pool[gs.idx];
+  gs.answered = false;
+
+  // Progress
+  const total = gs.pool.length;
+  const done  = gs.idx;
+  document.getElementById('g-progress').textContent = `${done + 1} / ${Math.min(total, done + 1 + (total - done))}`;
+  document.getElementById('g-progress-fill').style.width = (done / total * 100) + '%';
+
+  // Streak badge
+  const sb = document.getElementById('streak-badge');
+  if (gs.streak >= 2) {
+    sb.classList.remove('hidden');
+    document.getElementById('streak-mult').textContent =
+      gs.streak >= 12 ? '×3' : gs.streak >= 7 ? '×2' : '×1.5';
+  } else {
+    sb.classList.add('hidden');
+  }
+
+  // Category tag
+  const cat = CATS[q.cat];
+  const tagEl = document.getElementById('q-cat-tag');
+  tagEl.textContent = cat ? cat.emoji + ' ' + cat.name : q.cat;
+  if (cat) tagEl.style.background = hexAlpha(cat.color, 0.2);
+
+  // Stars
+  document.getElementById('q-stars').textContent = '★'.repeat(q.d) + '☆'.repeat(3 - q.d);
+
+  // Question text
+  document.getElementById('q-text').innerHTML = math(q.q);
+
+  // Answers
+  const grid = document.getElementById('answers-grid');
+  grid.innerHTML = '';
+  const letters = ['A', 'B', 'C', 'D'];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'answer-btn';
+    btn.innerHTML = `<span class="answer-letter">${letters[i]}</span><span>${math(opt)}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    grid.appendChild(btn);
+  });
+
+  // Hide explanation
+  document.getElementById('explanation-box').classList.add('hidden');
+
+  // Next button label
+  const nextBtn = document.getElementById('next-btn');
+  const isLast = gs.idx >= gs.pool.length - 1;
+  nextBtn.textContent = isLast ? 'Voir les résultats →' : 'Suivant →';
+}
+
+function hexAlpha(hex, alpha) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+/* ============================================================
+   SELECT ANSWER
+   ============================================================ */
+function selectAnswer(idx) {
+  if (gs.answered) return;
+  gs.answered = true;
+
+  const q = gs.pool[gs.idx];
+  const correct = idx === q.ans;
+  const btns = document.querySelectorAll('.answer-btn');
+
+  // Mark buttons
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.ans) btn.classList.add('correct');
+    else if (i === idx && !correct) btn.classList.add('wrong');
+    else btn.classList.add('dim');
+  });
+
+  // Update stats
+  save.totalAnswered++;
+  save.catTotal[q.cat] = (save.catTotal[q.cat] || 0) + 1;
+
+  if (correct) {
+    gs.correct++;
+    gs.streak++;
+    if (gs.streak > gs.bestStreak) gs.bestStreak = gs.streak;
+    save.totalCorrect++;
+    save.catCorrect[q.cat] = (save.catCorrect[q.cat] || 0) + 1;
+
+    // Score calculation
+    const mult = gs.streak >= 12 ? 3 : gs.streak >= 7 ? 2 : gs.streak >= 3 ? 1.5 : 1;
+    const pts = Math.round(q.d * 10 * mult);
+    gs.score += pts;
+    gs.xpGained += Math.round(pts * 0.5);
+
+    showFeedback(btns[idx], '+' + pts + ' pts');
+  } else {
+    gs.wrong++;
+    gs.streak = 0;
+    gs.lives -= 1;
+    updateLives();
+    btns[idx]?.classList.add('shake');
+  }
+
+  updateScore();
+  persist();
+
+  // Show explanation
+  const expl = document.getElementById('explanation-box');
+  const icon = document.getElementById('expl-icon');
+  const title = document.getElementById('expl-title');
+  const text = document.getElementById('expl-text');
+  icon.textContent = correct ? '✅' : '❌';
+  title.textContent = correct ? 'Bonne réponse !' : 'Pas tout à fait…';
+  text.innerHTML = math(q.expl || '');
+  expl.classList.remove('hidden');
+
+  // Auto-end if no lives
+  if (gs.lives <= 0) {
+    document.getElementById('next-btn').textContent = 'Voir les résultats →';
+  }
+}
+
+function showFeedback(btn, text) {
+  const fb = document.createElement('div');
+  fb.style.cssText = `position:absolute;right:14px;top:50%;transform:translateY(-50%);
+    color:#f59e0b;font-weight:900;font-size:0.9rem;pointer-events:none;
+    animation:float-up .8s ease forwards;`;
+  fb.textContent = text;
+  btn.style.position = 'relative';
+  btn.appendChild(fb);
+  setTimeout(() => fb.remove(), 900);
+}
+
+/* ============================================================
+   NEXT QUESTION
+   ============================================================ */
+function nextQuestion() {
+  if (gs.lives <= 0) { endGame(); return; }
+  gs.idx++;
+  if (gs.idx >= gs.pool.length) { endGame(); return; }
+  renderQuestion();
+}
+
+/* ============================================================
+   END GAME
+   ============================================================ */
+function endGame() {
+  if (gs.timerInterval) { clearInterval(gs.timerInterval); gs.timerInterval = null; }
+
+  // Finalize XP
+  save.xp += gs.xpGained;
+  if (gs.bestStreak > save.bestStreak) save.bestStreak = gs.bestStreak;
+  if (gs.score > save.bestScore) save.bestScore = gs.score;
+  if (gs.correct === gs.pool.length && gs.pool.length >= 10) save.hadPerfect = true;
+
+  // Daily
+  if (gs.mode === 'daily') {
+    save.lastDaily = new Date().toISOString().slice(0, 10);
+    save.dailyDone = true;
+  }
+
+  // Check badges
+  const newBadges = [];
+  BADGES.forEach(b => {
+    if (!save.badges.includes(b.id) && b.test(save)) {
+      save.badges.push(b.id);
+      newBadges.push(b);
+    }
+  });
+
+  persist();
+
+  // Result screen
+  const total = gs.correct + gs.wrong;
+  const pct = total > 0 ? Math.round(gs.correct / total * 100) : 0;
+
+  document.getElementById('r-emoji').textContent =
+    pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '😊' : '📚';
+  document.getElementById('r-title').textContent =
+    pct >= 90 ? 'Excellent !' : pct >= 70 ? 'Très bien !' : pct >= 50 ? 'Pas mal !' : 'Continue !';
+  document.getElementById('r-subtitle').textContent =
+    pct >= 90 ? 'Tu maîtrises les suites !' : pct >= 70 ? 'Belle progression !' : pct >= 50 ? 'Encore un peu de travail !' : 'Révise le cours et réessaie !';
+  document.getElementById('r-score').textContent = gs.score;
+  document.getElementById('r-correct').textContent = gs.correct + ' / ' + total;
+  document.getElementById('r-pct').textContent = pct + '%';
+  document.getElementById('r-streak').textContent = gs.bestStreak;
+  document.getElementById('r-best').textContent = save.bestScore;
+  document.getElementById('xp-gained-val').textContent = gs.xpGained;
+
+  const badgesBox = document.getElementById('new-badges-box');
+  badgesBox.innerHTML = '';
+  newBadges.forEach(b => {
+    badgesBox.innerHTML += `<div class="new-badge">
+      <span class="new-badge-icon">${b.icon}</span>
+      <div class="new-badge-text"><strong>Badge débloqué : ${b.name}</strong><span>${b.desc}</span></div>
+    </div>`;
+  });
+
+  showScreen('s-result');
+
+  if (pct >= 80) launchConfetti();
+}
+
+/* ============================================================
+   REPLAY
+   ============================================================ */
+function replayGame() {
+  startGame(gs.mode, gs.category);
+}
+
+/* ============================================================
+   QUIT
+   ============================================================ */
+function confirmQuit() {
+  if (gs.timerInterval) clearInterval(gs.timerInterval);
+  showScreen('s-home');
+  renderHome();
+}
+
+/* ============================================================
+   STATS SCREEN
+   ============================================================ */
+function goStats() {
+  renderStats();
+  showScreen('s-stats');
+}
+
+function renderStats() {
+  const el = document.getElementById('stats-content');
+  const pct = save.totalAnswered > 0
+    ? Math.round(save.totalCorrect / save.totalAnswered * 100) : 0;
+  const { level, pct: lvlPct } = getLevelProgress(save.xp);
+
+  let html = `
+    <div class="stats-big-grid">
+      <div class="stats-big-card"><strong>${save.totalAnswered}</strong><span>Réponses</span></div>
+      <div class="stats-big-card"><strong>${pct}%</strong><span>Réussite</span></div>
+      <div class="stats-big-card"><strong>${save.bestStreak}</strong><span>Meilleure série 🔥</span></div>
+      <div class="stats-big-card"><strong>${save.bestScore}</strong><span>Meilleur score</span></div>
+    </div>
+
+    <div class="xp-section">
+      <div class="xp-row">
+        <div class="level-pill">Niveau ${level}</div>
+        <div class="xp-bar"><div class="xp-fill" style="width:${lvlPct}%"></div></div>
+        <div class="xp-label">${save.xp} XP</div>
+      </div>
+    </div>
+
+    <div class="stats-section">
+      <h3>📊 Par thème</h3>`;
+
+  Object.entries(CATS).forEach(([id, cat]) => {
+    const done = save.catTotal[id] || 0;
+    const ok   = save.catCorrect[id] || 0;
+    const p    = done > 0 ? Math.round(ok / done * 100) : 0;
+    html += `<div class="cat-progress-item">
+      <div class="cat-progress-label">
+        <span>${cat.emoji} ${cat.name}</span>
+        <span>${done > 0 ? p + '%' : '—'} (${ok}/${done})</span>
+      </div>
+      <div class="cat-progress-bar">
+        <div class="cat-progress-fill" style="width:${p}%;background:${cat.color}"></div>
+      </div>
+    </div>`;
+  });
+
+  html += `</div><div class="stats-section"><h3>🏅 Badges</h3><div class="badges-grid">`;
+  BADGES.forEach(b => {
+    const earned = save.badges.includes(b.id);
+    html += `<div class="badge-card ${earned ? 'earned' : ''}">
+      <span class="badge-icon">${b.icon}</span>
+      <strong>${b.name}</strong>
+      <span>${b.desc}</span>
+    </div>`;
+  });
+  html += `</div></div>
+    <button class="reset-btn" onclick="resetData()">🗑️ Réinitialiser les données</button>`;
+
+  el.innerHTML = html;
+}
+
+function resetData() {
+  if (!confirm('Supprimer toutes les données de progression ?')) return;
+  localStorage.removeItem(STORE_KEY);
+  loadSave();
+  renderHome();
+  showScreen('s-home');
+  showToast('Données réinitialisées.');
+}
+
+/* ============================================================
+   CONFETTI
+   ============================================================ */
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  canvas.classList.remove('hidden');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const COLORS = ['#a855f7','#f59e0b','#10b981','#3b82f6','#ef4444','#ec4899'];
+  const particles = Array.from({length: 80}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height * 0.5,
+    r: Math.random() * 6 + 4,
+    d: Math.random() * 60 + 10,
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    tilt: Math.random() * 10 - 5,
+    tiltAngle: 0,
+    tiltIncrement: Math.random() * .05 + .05,
+  }));
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.tiltAngle += p.tiltIncrement;
+      p.y += (Math.cos(frame / 20) + p.d / 20 + 1.5);
+      p.x += Math.sin(frame / 20) * 1.5;
+      p.tilt = Math.sin(p.tiltAngle) * 12;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.ellipse(p.x, p.y, p.r, p.r * 0.4, p.tilt, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    frame++;
+    if (frame < 200) requestAnimationFrame(draw);
+    else canvas.classList.add('hidden');
+  }
+  draw();
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+function showToast(msg) {
+  const old = document.querySelector('.toast');
+  if (old) old.remove();
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2800);
+}
+
+/* ============================================================
+   CSS KEYFRAMES (injected)
+   ============================================================ */
+const style = document.createElement('style');
+style.textContent = `
+@keyframes float-up {
+  0%   { opacity:1; transform:translateY(-50%) scale(1); }
+  60%  { opacity:1; transform:translateY(-120%) scale(1.15); }
+  100% { opacity:0; transform:translateY(-160%) scale(0.9); }
+}`;
+document.head.appendChild(style);
+
+/* ============================================================
+   INIT
+   ============================================================ */
+loadSave();
+renderHome();
+</script>
+</body>
+</html>
